@@ -1,0 +1,57 @@
+
+<h1>Product List</h1>
+<a href="/add">product add</a>
+<br>
+<br>
+
+<form action="" method="get">
+    <input type="search" name="search" value="{{ search|default:'' }}" placeholder="Search product">
+    <button type="submit">Search</button>
+</form>
+<table border="1">
+    <tr>
+        <th>Sr.no</th>
+        <th>Product Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Supplier</th>
+        <th>Minimun Stock Level</th>
+        <th>Action</th>
+    </tr>
+    {% for product in page_obj %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{product.product_name}}</td>
+        <td>{{product.category}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.quantity}}</td>
+        <td>{{product.supplier}}</td>
+        <td>{{product.minimum_stock_level}}</td>
+        <td>
+            <a href="/edit/{{product.id}}">edit</a>
+            <a href="/delete/{{product.id}}">delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<div class="pagination" style="margin-top: 20px; text-align: center;">
+    <span class="step-links">
+        <!-- Previous Page Link -->
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <!-- Current Page Indicator -->
+        <span class="current" style="font-weight: bold; margin: 0 10px;">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        <!-- Next Page Link -->
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>

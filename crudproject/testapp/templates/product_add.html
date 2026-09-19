@@ -1,0 +1,52 @@
+<h1>Product add</h1>
+
+<form action="" method="post">
+    {% csrf_token %}
+
+    <label for="product_name">Product Name</label>
+    <input type="text"  name="product_name">
+    {% if error.product_name %}
+        <p style="color:rgb(43, 19, 19);">{{ error.product_name.0|default:'' }}</p>
+    {% endif %}
+    
+    <br>
+    <br>
+    <label for="category">Category</label>
+    <input type="text"  name="category">
+    {% if error.category %}
+        <p style="color:rgb(28, 4, 4);">{{ error.category.0|default:'' }}</p>
+    {% endif %}
+    <br>
+    <br>
+    <label for="price">Price</label>
+    <input type="number"  name="price">
+    {% if error.price %}
+        <p style="color:rgb(28, 8, 8);">{{ error.price.0 }}</p>
+
+    {% endif %}
+    <br>
+    <br>
+    <label for="quantity">Quantity</label>
+    <input type="number" id="quantity" name="quantity" >
+    {% if error.quantity %}
+        <p style="color:rgb(31, 15, 15);"> {{ error.quantity.0 }}</p>
+    {% endif %}
+    <br>
+    <br>
+    <label for="supplier">Supplier</label>
+    <input type="text"  name="supplier" >
+    {% if error.supplier %}
+        <p style="color:rgb(28, 13, 13);">{{ error.supplier.0 }}</p>
+    {% endif %}
+    <br>
+    <br>
+    <label for="minimum_stock_level">Minimum Stock Level</label>
+    <input type="number"  name="minimum_stock_level">
+    {% if error.minimum_stock_level %}
+        <p style="color:rgb(17, 6, 6);">{{ error.minimum_stock_level.0 }}</p>
+    {% endif %}
+    <br>
+    <br>
+    <br>
+    <button type="submit">Add Product</button>
+</form>
