@@ -14,23 +14,24 @@ def product_list(request):
     page_obj = paginator.get_page(page_number)
     return render(request,'product_list.html',{'page_obj': page_obj,'search': search})
 
-
 def product_add(request):
     if request.method == "POST":
         product = Product(
-            product_name=request.POST.get("product_name"),
-            category=request.POST.get("category"),
-            price=request.POST.get("price"),
-            quantity=request.POST.get("quantity"),
-            supplier=request.POST.get("supplier"),
-            minimum_stock_level=request.POST.get("minimum_stock_level"),
+            product_name=request.POST.get("product_name", "").strip(),
+            category=request.POST.get("category", "").strip(),
+            price=request.POST.get("price", "").strip() or None,
+            quantity=request.POST.get("quantity", "").strip() or None,
+            supplier=request.POST.get("supplier", "").strip(),
+            minimum_stock_level=request.POST.get("minimum_stock_level", "").strip() or None,
         )
+
         try:
             product.full_clean()
             product.save()
             return redirect("product_list")
         except ValidationError as e:
-            return render( request, "product_add.html",{"error": e.message_dict, "data": request.POST})
+            return render(request,"product_add.html",{"errors": e.message_dict,"product": product})
+
     return render(request, "product_add.html")
 
 def product_edit(request,id):
